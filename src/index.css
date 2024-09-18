@@ -11,6 +11,11 @@ body {
 
 /*start page*/
 .main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 90vh;
   position: relative;
 }
 
@@ -37,39 +42,6 @@ body {
 
   width: 600px;
 }
-
-.content--title {
-  font-family: 'Karla', sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 31.25px;
-  line-height: 37px;
-}
-
-.content--text {
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-}
-
-.content--btn {
-  width: 193px;
-  height: 52px;
-  background: #4D5B9E;
-  border: none;
-  border-radius: 15px;
-
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  color: #F5F7FB;
-  cursor: pointer;
-}
-
 
 
 .block {

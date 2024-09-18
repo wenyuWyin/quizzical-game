@@ -129,7 +129,7 @@ hr {
   border-radius: 10px;
   border: none;
   margin-top: 5px;
-  cursor: pointers;
+  cursor: pointer;
 
   font-family: 'Inter';
   font-style: normal;

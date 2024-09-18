@@ -3,30 +3,41 @@ import Block from "./Block"
 
 export default function Quiz() {
     // retrieve data from API
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch("https://opentdb.com/api.php?amount=5&category=11&difficulty=easy&type=multiple")
-            .then(res => res.json())
-            .then(data => setData(data.results))
-    }, [])
+        const fetchData = async () => {
+            try {
+                const res = await fetch("https://opentdb.com/api.php?amount=5&category=11&difficulty=easy&type=multiple");
+                if (!res.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                const result = await res.json();
+                setData(result.results);
+            } catch (error) {
+                console.error("Fetching data failed: ", error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     //reformat the data
     function replace(input) {
-        input = input.replaceAll("&quot;", "\"")
-        input = input.replaceAll("&#039;", "\'")
-        return input
+        input = input.replaceAll("&quot;", "\"");
+        input = input.replaceAll("&#039;", "\'");
+        return input;
     }
 
     function replaceArray(array) {
         for (var answer in array) {
-            answer = replace(answer)
+            answer = replace(answer);
         }
-        return array
+        return array;
     }
 
     function getRandomIndex() {
-        return Math.floor(Math.random()*4)
+        return Math.floor(Math.random()*4);
     }
 
     const useful_data = data.map((item, index) => {

@@ -8,18 +8,11 @@ import {
   Snackbar, 
   Alert,
 } from '@mui/material';
-import Quiz from './components/Quiz';
+import { MainPage } from './components/MainPage';
 
 export default function App() {
 
   const styles = {
-    panel: {
-      width: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-    },
     box: {
       minWidth: "50%",
       display: "flex",
@@ -57,30 +50,32 @@ export default function App() {
   }
 
   const [isGameStart, setIsGameStart] = useState(false);
+  // used to render game setting is not complete when trying to start the game
   const [showAlert, setShowAlert] = useState(false);
 
+  // game setting variables 
   const [level, setLevel] = useState("Easy");
   const [category, setCategory] = useState("None");
   const [numQs, setNumQs] = useState("5");
 
-  const numOptions = Array.from({ length: 16 }, (_, i) => (i + 5).toString());
   const levelOptions = ["Easy", "Medium", "Hard"];
+  const numOptions = Array.from({ length: 16 }, (_, i) => (i + 5).toString());
   const categoryOptions = [
     "General Knowledge", 
     "Books", 
-    "Film", 
+    "Films", 
     "Music", 
-    "Japanese Anime & Manga", 
-    "Cartoons & Animations",
-    "Sports",
-    "Art",
-    "History",
-    "Geography",
     "Television",
     "Science & Nature",
+    "Sports",
+    "Geography",
+    "History",
+    "Art",
     "Celebrities",
-    "Animals"
-  ]
+    "Animals",
+    "Japanese Anime & Manga", 
+    "Cartoons & Animations",
+  ];
 
   const handleStartClick = () => {
     if (category === "None") {
@@ -102,7 +97,7 @@ export default function App() {
         setNumQs(event.target.value);
         break;
     }
-  }
+  };
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -113,11 +108,18 @@ export default function App() {
 
   return (
     <div className="main">
-      <img src='/public/images/blob1.png' className="main--img1"/>
-        {isGameStart ? <Quiz/>
+      <img src='/images/blob1.png' className="main--img1"/>
+        {isGameStart ? 
+          <MainPage 
+            setIsGameStart={setIsGameStart}
+            level={level}
+            category={category}
+            numQs={numQs}
+            />
           : (
-            <div style={styles.panel}>
+            <div className='panel'>
               <h1 style={styles.title}>Quizzical</h1>
+              
               <div style={styles.box}>
                 <FormControl sx={{ m: 1, minWidth: 110 }} size="small">
                   <InputLabel># of Questions</InputLabel>
@@ -191,9 +193,13 @@ export default function App() {
                   </Select>
                 </FormControl>
               </div>
-              <h4 style={styles.hint}>Customize your quiz and Press button to start the game</h4>
-              <Button 
-                style={styles.button}
+
+              <h4 style={styles.hint}>
+                Customize your quiz and Press button to start the game
+              </h4>
+
+              <Button
+                sx={styles.button}
                 onClick={handleStartClick}
                 >
                   start quiz
@@ -211,7 +217,7 @@ export default function App() {
             Please select a valid Category to start the Quiz
           </Alert>
         </Snackbar>
-      <img src='/public/images/blob2.png' className="main--img2" />
+      <img src='/images/blob2.png' className="main--img2" />
     </div>
   )
 }

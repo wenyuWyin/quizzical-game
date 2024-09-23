@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { 
     Button,
     Divider
@@ -20,8 +20,8 @@ export const QsBlock = (props) => {
             width: "100%",
         },
         block: {
-            width: "500px",
-            height: "400px",
+            width: "600px",
+            height: "500px",
             textAlign: "left",
         },
         submitBox: {
@@ -36,7 +36,7 @@ export const QsBlock = (props) => {
             fontFamily: "Inter",
             fontStyle: "normal",
             fontWeight: "700",
-            fontSize: "12.8px",
+            fontSize: "15px",
             lineHeight: "15px",
             textAlign: "center",
             color: "#293264",
@@ -52,7 +52,7 @@ export const QsBlock = (props) => {
             fontFamily: "Inter",
             fontStyle: "normal",
             fontWeight: "600",
-            fontSize: "10.24px",
+            fontSize: "12px",
             lineHeight: "12px",
             color: "#F5F7FB",
         },
@@ -60,8 +60,8 @@ export const QsBlock = (props) => {
             fontFamily: "Karla",
             fontStyle: "normal",
             fontWeight: "700",
-            fontSize: "16px",
-            lineHeight: "19px",
+            fontSize: "18px",
+            lineHeight: "20px",
         },
         buttonBox: {
             display: "flex",
@@ -73,8 +73,8 @@ export const QsBlock = (props) => {
             margin: "0 5px 0 0",
             border: "0.794239px solid #4D5B9E",
             borderRadius: "7.94239px",
-            minWidth: "72px",
-            minHeight: "20px",
+            minWidth: "120px",
+            minHeight: "32px",
             position: "relative",
             padding: "4px 7px",
             textTransform: "none",
@@ -83,7 +83,7 @@ export const QsBlock = (props) => {
             fontFamily: "Inter",
             fontStyle: "normal",
             fontWeight: "500",
-            fontSize: "10.24px",
+            fontSize: "12px",
             lineHeight: "12px",
             textAlign: "center",
             color: "#293264",
@@ -101,12 +101,16 @@ export const QsBlock = (props) => {
         },
     }
 
-    const [selectedAnswer, setSelectedAnswer] = useState(() => 
-        data.reduce((acc, _, index) => {
-            acc[index] = ""; // Initialize each index with an empty string
-            return acc;
-        }, {})
-    )
+    const [selectedAnswer, setSelectedAnswer] = useState({});
+
+    useEffect(() => {
+        // initialize a dictionary with empty string to track the selected answer
+        setSelectedAnswer(
+            Object.fromEntries(
+                Array.from({ length: data.length }, (_, i) => [`${i}`, ""])
+            )
+        )
+    }, [data])
 
     const handleButtonClick = (qsId, ansId) => {
         setSelectedAnswer(prevSelectedAnswer => {
@@ -156,6 +160,7 @@ export const QsBlock = (props) => {
 
                                         return (
                                             <Button
+                                                disabled={isSubmit}
                                                 sx={{
                                                     ...styles.button,
                                                     ...(checked && styles.checkedButton),
@@ -176,7 +181,7 @@ export const QsBlock = (props) => {
                 </div>
             </div>
 
-            {(checkAnswer && isCompleted) ? (
+            {(isCompleted) ? (
                 <div style={styles.submitBox}>
                     <p style={styles.submitText}>
                         {`You scored ${count}/${data.length} correct answers`}
@@ -199,7 +204,8 @@ export const QsBlock = (props) => {
                         >
                         Check Answers
                     </Button>
-                </div>)}
+                </div>
+            )}
 
         </div>
     )

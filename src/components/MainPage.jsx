@@ -14,7 +14,7 @@ export const MainPage = (props) => {
         title: {
             fontFamily: "Karla, sans-serif",
             fontStyle: "normal",
-            fontSize: "36px",
+            fontSize: "48px",
         },
     }
 
@@ -45,11 +45,14 @@ export const MainPage = (props) => {
         const fetchData = async () => {
             try {
                 const res = await fetch(`https://opentdb.com/api.php?${uri}&type=multiple`);
+
                 if (!res.ok) {
                     throw new Error("Network response was not ok");
                 }
+
                 const result = await res.json();
                 setData(result.results);
+
             } catch (error) {
                 console.error("Fetching data failed: ", error);
             }
@@ -97,7 +100,7 @@ export const MainPage = (props) => {
 
     return (
         <div className="content">
-            <h2 style={styles.title}>Quizzical</h2>
+            <h1 style={styles.title}>Quizzical</h1>
 
             <QsBlock
                 data={formatedData}
